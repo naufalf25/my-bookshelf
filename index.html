@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/image/favicon-32x32.png">
+    <link rel="stylesheet" href="./public/css/style.css">
+    <title>My Bookshelf</title>
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+        } else {
+        document.documentElement.classList.remove('dark')
+        }
+    </script>
+</head>
+<body class="bg-white transition duration-300 lg:max-h-screen dark:bg-slate-800">
+    <header class="mt-4">
+        <div class="container">
+            <div class="flex flex-wrap justify-between">
+                <h2 class="text-2xl font-bold tracking-widest md:text-3xl dark:text-slate-100">My Bookshelf</h2>
+                <nav>
+                    <ul class="flex">
+                        <li class="mr-2">
+                            <button id="addBook" class="action-button hover:bg-blue-500"><i class="fa-solid fa-plus"></i></button>
+                        </li>
+                        <li class="flex items-center -translate-y-1 md:translate-y-0 pl-1">
+                            <div class="md:flex">
+                                <span class="mr-2 text-sm text-slate-500 block md:hidden dark:text-slate-300">mode</span>
+                                <span class="mr-2 text-sm text-slate-500 hidden md:block dark:text-slate-300">light</span>
+                                <input type="checkbox" class="hidden" id="dark-toggle">
+                                <label for="dark-toggle">
+                                    <div class="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1 dark:bg-white">
+                                        <div class="toggle-circle h-4 w-4 rounded-full bg-white transition duration-500 dark:bg-slate-800"></div>
+                                    </div>
+                                </label>
+                                <span class="ml-2 text-sm text-slate-500 hidden md:block dark:text-slate-300">dark</span>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="mt-2 border-b-[1px] border-b-slate-300 dark:border-b-slate-600"></div>
+        </div>
+    </header>
+    <section id="overlay" class="fixed w-full h-full top-0 left-0 bg-black opacity-75 z-40 hidden"></section>
+    <section id="addBookSection" class="w-full md:w-10/12 lg:w-2/3 fixed top-[20%] left-0 right-0 mx-auto z-50 hidden">
+        <div class="container">
+            <div class="card bg-white">
+                <p id="closeMenu" class="text-3xl text-slate-700 text-center md:text-end md:px-4 mb-1 cursor-pointer"><i class="fa-solid fa-xmark action-button hover:bg-red-600 text-white"></i></p>
+                <h4 class="title-card-font">Masukkan data buku Anda</h4>
+                <form class="mt-2 lg:px-4">
+                    <div class="flex-form">
+                        <label for="titleBook" class="capitalize mt-2 font-medium dark:text-slate-100">Masukkan judul buku</label>
+                        <input type="text" name="titleBook" id="titleBook" class="input-group">
+                    </div>
+                    <div class="flex-form">
+                        <label for="authorBook" class="capitalize mt-2 font-medium dark:text-slate-100">Masukkan nama penulis buku</label>
+                        <input type="text" name="authorBook" id="authorBook" class="input-group">
+                    </div>
+                    <div class="flex-form">
+                        <label for="yearBook" class="capitalize mt-2 font-medium dark:text-slate-100">Masukkan tahun terbit</label>
+                        <input type="number" name="titleBook" id="yearBook" class="input-group">
+                    </div>
+                    <div class="mt-2 ml-1">
+                        <input type="checkbox" name="finishBook" id="finishBook">
+                        <label for="finishBook" class="dark:text-slate-100">Selesai dibaca</label>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button type="submit" id="addBookSubmit" class="px-4 py-2 bg-blue-400 rounded-lg font-medium text-white tracking-wider border-[1px] border-transparent transition duration-300 hover:bg-white hover:text-blue-400 hover:border-slate-500 dark:bg-blue-800 dark:text-slate-100 dark:hover:text-blue-800 dark:hover:bg-slate-100">Tambahkan Buku</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section id="editBookSection" class="w-full md:w-10/12 lg:w-2/3 fixed top-[20%] left-0 right-0 mx-auto z-50 hidden">
+        <div class="container">
+            <div class="card bg-white">
+                <p id="closeEditMenu" class="text-3xl text-slate-700 text-center md:text-end md:px-4 mb-1 cursor-pointer"><i class="fa-solid fa-xmark action-button hover:bg-red-600 text-white"></i></p>
+                <h4 class="title-card-font">Silahkan Edit data buku Anda</h4>
+                <form class="mt-2 lg:px-4">
+                    <div class="flex-form">
+                        <label for="editTitleBook" class="capitalize mt-2 font-medium dark:text-slate-100">Masukkan judul buku</label>
+                        <input type="text" name="titleBook" id="editTitleBook" class="input-group">
+                    </div>
+                    <div class="flex-form">
+                        <label for="editAuthorBook" class="capitalize mt-2 font-medium dark:text-slate-100">Masukkan nama penulis buku</label>
+                        <input type="text" name="authorBook" id="editAuthorBook" class="input-group">
+                    </div>
+                    <div class="flex-form">
+                        <label for="editYearBook" class="capitalize mt-2 font-medium dark:text-slate-100">Masukkan tahun terbit</label>
+                        <input type="number" name="yearBook" id="editYearBook" class="input-group">
+                    </div>
+                    <div class="mt-2 ml-1">
+                        <input type="checkbox" name="editFinishBook" id="editFinishBook">
+                        <label for="editFinishBook" class="dark:text-slate-100">Selesai dibaca</label>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button type="submit" id="editBookSubmit" class="px-4 py-2 bg-blue-400 rounded-lg font-medium text-white tracking-wider border-[1px] border-transparent transition duration-300 hover:bg-white hover:text-blue-400 hover:border-slate-500 dark:bg-blue-800 dark:text-slate-100 dark:hover:text-blue-800 dark:hover:bg-slate-100">Tambahkan Buku</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <div class="lg:mt-5 lg:flex lg:flex-row-reverse">
+        <div class="lg:w-1/3">
+            <section class="mt-10 lg:mt-6">
+                <div class="container">
+                    <div class="card border-t-blue-400 hover:border-t-blue-300 dark:border-t-blue-800 dark:hover:border-t-blue-900">
+                        <h4 class="title-card-font">Pencarian Buku</h4>
+                        <form class="mt-4">
+                            <label for="searchText" class="capitalize font-medium dark:text-slate-100">masukkan judul buku</label>
+                            <input type="text" placeholder="example" id="searchText" class="mt-1 px-3 py-2 w-full border-[1px] border-slate-200 rounded-lg dark:bg-slate-400 dark:font-medium">
+                            <button type="submit" id="searchBookSubmit" class="w-full mt-2 mb-2 px-3 py-2 capitalize bg-blue-400 rounded-lg font-semibold text-white tracking-wider border-[1px] border-transparent transition duration-300 hover:bg-white hover:border-slate-500 hover:text-blue-400 dark:bg-blue-800 dark:text-slate-100 dark:hover:text-blue-800 dark:hover:bg-slate-100">cari buku</button>
+                        </form>
+                        <h4 id="searchTitle" class="mt-4 pt-4 title-card-font border-t-[1px] border-t-slate-300 hidden">Hasil Pencarian</h4>
+                        <div id="searchingBook"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="lg:w-2/3">
+            <section class="mt-6">
+                <div class="container">
+                    <div class="card border-t-green-400 hover:border-t-green-300 dark:border-t-green-700 dark:hover:border-t-green-800">
+                        <h4 class="title-card-font">daftar buku selesai dibaca</h4>
+                        <div id="finishedBook" class="custom-scrollbar overflow-y-auto h-[12rem]"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="mt-6">
+                <div class="container">
+                    <div class="card border-t-red-400 hover:border-t-red-300 dark:border-t-red-700 dark:hover:border-t-red-800">
+                        <h4 class="title-card-font">Daftar Buku Belum Selesai Dibaca</h4>
+                        <div id="unfinishedBook" class="custom-scrollbar overflow-y-auto h-[12rem]"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/736f9082a4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.28/dist/sweetalert2.all.min.js"></script>
+    <script src="./public/js/main.js"></script>
+</body>
+</html>

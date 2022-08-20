@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	@apply bg-slate-600;
+}
+
+.custom-scrollbar::-webkit-scrollbar
+{
+	width: 12px;
+	@apply bg-slate-600;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+@media (max-width: 1366px) {
+    .container {
+        max-width: 1366px;
+    }
+}
+
+@media (max-width: 1440px) {
+    .container {
+        max-width: 1440px;
+    }
+}
+
+.card {
+    @apply p-4 rounded-lg w-full shadow-md border-t-8 hover:shadow-sm dark:bg-slate-700;
+}
+
+.title-card-font {
+    @apply pb-2 capitalize font-semibold text-center text-xl border-b-[1px] border-b-slate-300 md:text-2xl dark:text-slate-100 dark:border-b-slate-500;
+}
+
+.action-button {
+    @apply ml-1 px-3 py-1 border-[1px] border-slate-300 rounded-lg text-black bg-white transition duration-300 hover:border-transparent hover:text-white dark:bg-slate-600 dark:text-white;
+}
+
+.book-card {
+    @apply mt-4 py-2 px-4 border-[1px] border-slate-400 rounded-lg md:flex md:flex-wrap md:justify-between md:items-center dark:bg-slate-300;
+}
+
+.flex-form {
+    @apply flex flex-wrap flex-col;
+}
+
+.input-group {
+    @apply mt-1 py-1 px-3 rounded-lg border-[1px] border-slate-500 dark:bg-slate-200 dark:font-medium;
+}
+
+#dark-toggle:checked ~ label div.toggle-circle {
+    @apply translate-x-3;
+}
